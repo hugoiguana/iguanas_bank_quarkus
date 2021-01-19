@@ -1,0 +1,50 @@
+
+
+# Maven:
+mvn quarkus:dev
+mvn package -Pnative
+mvn verify -Pnative
+
+------------------------------------------------------------------------------
+# Endpoints:
+curl --location --request GET 'http://localhost:8081/hello-resteasy'
+curl --location --request GET 'http://localhost:8081/openapi'
+curl --location --request GET 'http://localhost:8081/swagger-ui/'
+curl --location --request GET 'http://localhost:8081/version'
+curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/managers'
+curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/managers/1'
+
+curl --location --request POST 'http://localhost:8081/v1/bank/backoffice/managers' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name" : "Gabriel",
+    "birthday_date" : "2020-07-02",
+    "gender" : "1",
+    "email": "gabriel@test.com"
+}'
+
+curl --location --request PUT 'http://localhost:8081/v1/bank/backoffice/managers' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "id" : 2,
+    "name" : "Gabriel 2",
+    "birthday_date" : "2020-07-02",
+    "gender" : "1",
+    "email": "gabriel@test.com"
+}'
+
+curl --location --request DELETE 'http://localhost:8081/v1/bank/backoffice/managers/2'
+
+
+------------------------------------------------------------------------------
+
+# Docker:
+docker-compose -f docker-compose.yaml up -d
+docker container ls
+docker-compose -f docker-compose.yaml down
+
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------
+------------------------------------------------------------------------------

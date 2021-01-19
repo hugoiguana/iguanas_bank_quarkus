@@ -1,0 +1,1 @@
+insert into tb_bank_manager (bm_name, bm_birthday_date, bm_gender, bm_email) values ('Hugo', '1989-04-20', 1, 'hugo@test.com');
