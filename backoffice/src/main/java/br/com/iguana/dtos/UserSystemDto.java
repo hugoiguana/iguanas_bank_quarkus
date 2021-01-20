@@ -4,6 +4,7 @@ import br.com.iguana.entities.UserSystem;
 import br.com.iguana.enums.Gender;
 import org.eclipse.microprofile.openapi.annotations.media.Schema;
 
+import javax.json.bind.annotation.JsonbDateFormat;
 import javax.json.bind.annotation.JsonbProperty;
 import javax.json.bind.annotation.JsonbTransient;
 import javax.validation.constraints.Email;
@@ -38,6 +39,7 @@ public class UserSystemDto {
     @Schema(required = true)
     @NotNull
     @JsonbProperty("birthday_date")
+    @JsonbDateFormat("dd/MM/yyyy")
     private LocalDate birthdayDate;
 
     @Schema(required = true)
