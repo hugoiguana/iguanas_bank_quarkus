@@ -12,7 +12,7 @@ public interface ISystemUserRepository {
 
     Optional<UserSystem> findById(Long id);
 
-    UserSystem update(UserSystem book);
+    UserSystem update(UserSystem userSystem);
 
     void deleteById(Long id);
 }

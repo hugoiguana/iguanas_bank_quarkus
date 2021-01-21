@@ -38,7 +38,7 @@ public class UserSystemController implements IUserSystemController {
     }
 
     @Override
-    public Response getBook(@Parameter(description = "Bank Users identifier", required = true) @PathParam("id") Long id) {
+    public Response getById(@Parameter(description = "Bank Users identifier", required = true) @PathParam("id") Long id) {
         Optional<UserSystem> user = service.findById(id);
         if (user.isPresent()) {
             LOGGER.debug("Found Bank User " + user.toString());

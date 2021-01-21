@@ -2,8 +2,16 @@
 
 # Maven:
 mvn quarkus:dev
+mvn package -Dquarkus.package.type=jar
+mvn package -Dquarkus.package.type=fast-jar
+mvn package -Dquarkus.package.type=uber-jar
+mvn package -Dquarkus.package.type=native
+mvn package -Pnative -Dquarkus.native.container-build=true
 mvn package -Pnative
+
 mvn verify -Pnative
+
+
 
 ------------------------------------------------------------------------------
 # Endpoints:
@@ -11,29 +19,31 @@ curl --location --request GET 'http://localhost:8081/hello-resteasy'
 curl --location --request GET 'http://localhost:8081/openapi'
 curl --location --request GET 'http://localhost:8081/swagger-ui/'
 curl --location --request GET 'http://localhost:8081/version'
-curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/managers'
-curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/managers/1'
+curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/users'
+curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/users/1'
 
-curl --location --request POST 'http://localhost:8081/v1/bank/backoffice/managers' \
+curl --location --request POST 'http://localhost:8081/v1/bank/backoffice/users' \
 --header 'Content-Type: application/json' \
 --data-raw '{
-    "name" : "Gabriel",
-    "birthday_date" : "2020-07-02",
+    "name" : "Gabriel2",
+    "birthday_date" : "02/07/2020",
     "gender" : "1",
-    "email": "gabriel@test.com"
+    "email" : "gabriel2@test.com",
+    "profiles": [3]
 }'
 
-curl --location --request PUT 'http://localhost:8081/v1/bank/backoffice/managers' \
+curl --location --request PUT 'http://localhost:8081/v1/bank/backoffice/users' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "id" : 2,
     "name" : "Gabriel 2",
-    "birthday_date" : "2020-07-02",
+    "birthday_date" : "02/07/2020",
     "gender" : "1",
-    "email": "gabriel@test.com"
+    "email": "gabriel@test.com",
+    "profiles": [3]
 }'
 
-curl --location --request DELETE 'http://localhost:8081/v1/bank/backoffice/managers/2'
+curl --location --request DELETE 'http://localhost:8081/v1/bank/backoffice/users/2'
 
 
 ------------------------------------------------------------------------------
@@ -42,6 +52,22 @@ curl --location --request DELETE 'http://localhost:8081/v1/bank/backoffice/manag
 docker-compose -f docker-compose.yaml up -d
 docker container ls
 docker-compose -f docker-compose.yaml down
+
+docker image build -f src/main/docker/Dockerfile.jvm -t hfm/quarkus-jar .
+docker image build -f src/main/docker/Dockerfile.fast-jar -t hfm/quarkus-fast-jar .
+docker image build -f src/main/docker/Dockerfile.native -t hfm/quarkus-native .
+
+docker container run -i --rm -p 8080:8080 hfm/quarkus-jar
+
+# Executing the application with PROD profile with docker:
+docker-compose -f docker-compose_prod.yaml up -d
+docker-compose -f docker-compose_prod.yaml down
+
+# Executing the application with DEV profile locally:
+docker-compose -f docker-compose_dev.yaml up -d
+Rund the class in Intellij: "MainBackofficeApplication.class"
+Or just run:
+mvn quarkus:dev
 
 ------------------------------------------------------------------------------
 ------------------------------------------------------------------------------

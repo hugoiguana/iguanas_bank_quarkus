@@ -9,7 +9,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
@@ -19,37 +18,47 @@ import java.util.Set;
 @Table(name = "tb_user_system")
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "us_id"))
-        , @AttributeOverride(name = "creationDate", column = @Column(name = "us_dth_creation_date"))
-        , @AttributeOverride(name = "alterationDate", column = @Column(name = "us_dth_alteration_date"))
+        , @AttributeOverride(name = "creationDate", column = @Column(name = "us_creation_date"))
+        , @AttributeOverride(name = "alterationDate", column = @Column(name = "us_alteration_date"))
 })
 public class UserSystem extends AbstractEntity {
 
     @NotNull
     @Size(min = 3)
     @Schema(required = true)
-    @Column(name = "us_str_name", nullable = false)
+    @Column(name = "us_name", nullable = false)
     public String name;
 
     @NotNull
     @Schema(required = true)
-    @Column(name = "us_dr_birthday_date", nullable = false)
+    @Column(name = "us_birthday_date", nullable = false)
     public LocalDate birthdayDate;
 
     @NotNull
     @Schema(required = true)
-    @Column(name = "us_tp_gender", nullable = false)
+    @Column(name = "us_gender", nullable = false)
     public Integer gender;
 
     @NotNull
     @Email
     @Schema(required = true)
-    @Column(name = "us_str_email", nullable = false, unique = true)
+    @Column(name = "us_email", nullable = false, unique = true)
     public String email;
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tb_profile", joinColumns = @JoinColumn(name = "us_id"))
     @Column(name = "pro_name")
     public Set<Integer> profiles = new HashSet<>();
+
+    @OneToOne(mappedBy = "customer")
+    public BankAccount bankAccount;
+
+    public UserSystem() {
+    }
+
+    public UserSystem(Long id) {
+        this.id = id;
+    }
 
     @PrePersist
     public void prePersist() {
@@ -80,7 +89,7 @@ public class UserSystem extends AbstractEntity {
         return find("upper(name) like ?1", "%" + name.toUpperCase() + "%").list();
     }
 
-    public void load(UserSystem bmNew) {
+    public void loadToUpdate(UserSystem bmNew) {
         this.name = bmNew.name;
         this.birthdayDate = bmNew.birthdayDate;
         this.gender = bmNew.gender;

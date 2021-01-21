@@ -1,0 +1,77 @@
+
+# Others:
+curl --location --request GET 'http://localhost:8081/hello-resteasy'
+curl --location --request GET 'http://localhost:8081/openapi'
+curl --location --request GET 'http://localhost:8081/swagger-ui/'
+curl --location --request GET 'http://localhost:8081/version'
+
+------------------------------------------------------------------------------
+# UserSystem:
+
+curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/users'
+curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/users/1'
+curl --location --request DELETE 'http://localhost:8081/v1/bank/backoffice/users/2'
+
+curl --location --request POST 'http://localhost:8081/v1/bank/backoffice/users' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "name" : "Gabriel2",
+    "birthday_date" : "02/07/2020",
+    "gender" : "1",
+    "email" : "gabriel2@test.com",
+    "profiles": [3]
+}'
+
+curl --location --request PUT 'http://localhost:8081/v1/bank/backoffice/users' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "id" : 2,
+    "name" : "Gabriel 2",
+    "birthday_date" : "02/07/2020",
+    "gender" : "1",
+    "email": "gabriel@test.com",
+    "profiles": [3]
+}'
+
+
+------------------------------------------------------------------------------
+
+# BankAccountType:
+
+curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/account/type'
+curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/account/type/1'
+curl --location --request DELETE 'http://localhost:8081/v1/bank/backoffice/account/type/3'
+
+curl --location --request POST 'http://localhost:8081/v1/bank/backoffice/account/type' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "code": 3,
+        "description": "Conta salário",
+        "name": "Conta salário"
+    }'
+
+curl --location --request PUT 'http://localhost:8081/v1/bank/backoffice/account/type' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "id": 3,
+        "code": 3,
+        "description": "Conta salário",
+        "name": "Conta salário"
+    }'
+
+------------------------------------------------------------------------------
+
+# BankAccount:
+curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/account'
+curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/account/1'
+curl --location --request DELETE 'http://localhost:8081/v1/bank/backoffice/account/1'
+
+curl --location --request POST 'http://localhost:8081/v1/bank/backoffice/account' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "id_account_type" : "1",
+    "id_customer" : "1",
+    "id_manager" : "1"
+}'
+
+------------------------------------------------------------------------------

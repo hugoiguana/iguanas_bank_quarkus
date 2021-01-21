@@ -34,7 +34,7 @@ public interface IUserSystemController {
     @APIResponse(responseCode = "404", description = "The Bank User is not found for the given identifier")
     @GET
     @Path("/{id}")
-    Response getBook(@Parameter(description = "Bank Users identifier", required = true) @PathParam("id") Long id);
+    Response getById(@Parameter(description = "Bank Users identifier", required = true) @PathParam("id") Long id);
 
     @Operation(summary = "Creates a valid User")
     @APIResponse(responseCode = "201"

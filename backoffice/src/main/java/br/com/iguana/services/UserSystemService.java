@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
-public class UserSystemService {
+public class UserSystemService implements IUserSystemService {
 
     private static final Logger LOGGER = Logger.getLogger(UserSystemService.class);
 
@@ -23,34 +23,39 @@ public class UserSystemService {
         this.repository = repository;
     }
 
+    @Override
     public UserSystem insert(@Valid UserSystem userSystem) {
         LOGGER.info("Persisting a Bank User");
         repository.persist(userSystem);
         return userSystem;
     }
 
+    @Override
     @Transactional(Transactional.TxType.SUPPORTS)
     public List<UserSystem> findAll() {
         LOGGER.info("Listing all Bank Users");
         return repository.listAll();
     }
 
+    @Override
     @Transactional(Transactional.TxType.SUPPORTS)
     public Optional<UserSystem> findById(Long id) {
         LOGGER.info("Listing Bank Users with id : " + id);
         return repository.findById(id);
     }
 
+    @Override
     public UserSystem update(@Valid UserSystem bm) {
         LOGGER.info("Updating Bank Users with id : " + bm.toString());
 
         UserSystem bmNew = (UserSystem) UserSystem.findByIdOptional(bm.id)
                 .orElseThrow(() -> new BussinesNotFoundEntityException("Bank User", bm.id));
 
-        bmNew.load(bm);
+        bmNew.loadToUpdate(bm);
         return bmNew;
     }
 
+    @Override
     public void delete(Long id) {
         LOGGER.info("Deleting Bank Users with id : " + id);
         repository.deleteById(id);
