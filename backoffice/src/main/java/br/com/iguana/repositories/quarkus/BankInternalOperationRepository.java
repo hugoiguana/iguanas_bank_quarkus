@@ -1,7 +1,7 @@
 package br.com.iguana.repositories.quarkus;
 
-import br.com.iguana.entities.BankAccount;
-import br.com.iguana.repositories.IBankAccountRepository;
+import br.com.iguana.entities.BankInternalOperation;
+import br.com.iguana.repositories.IBankInternalOperationRepository;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
@@ -12,34 +12,29 @@ import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
-public class BankAccountRepository implements IBankAccountRepository {
+public class BankInternalOperationRepository implements IBankInternalOperationRepository {
 
     @Inject
     private EntityManager em;
 
     @Override
-    public BankAccount persist(BankAccount BankAccount) {
-        BankAccount.persist(BankAccount);
-        return BankAccount;
+    public BankInternalOperation persist(BankInternalOperation BankInternalOperation) {
+        BankInternalOperation.persist(BankInternalOperation);
+        return BankInternalOperation;
     }
 
     @Override
-    public List<BankAccount> listAll() {
-        return BankAccount.listAll();
+    public List<BankInternalOperation> listAll() {
+        return BankInternalOperation.listAll();
     }
 
     @Override
-    public Optional<BankAccount> findById(Long id) {
-        return BankAccount.findByIdOptional(id);
-    }
-
-    @Override
-    public BankAccount update(BankAccount bm) {
-        return em.merge(bm);
+    public Optional<BankInternalOperation> findById(Long id) {
+        return BankInternalOperation.findByIdOptional(id);
     }
 
     @Override
     public void deleteById(Long id) {
-        BankAccount.deleteById(id);
+        BankInternalOperation.deleteById(id);
     }
 }

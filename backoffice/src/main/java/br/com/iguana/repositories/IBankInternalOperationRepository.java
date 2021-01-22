@@ -1,20 +1,18 @@
 package br.com.iguana.repositories;
 
-import br.com.iguana.entities.BankAccount;
-import br.com.iguana.entities.UserSystem;
+import br.com.iguana.entities.BankInternalOperation;
+import br.com.iguana.entities.BankInternalOperation;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IBankAccountRepository {
+public interface IBankInternalOperationRepository {
 
-    BankAccount persist(BankAccount bankAccount);
+    BankInternalOperation persist(BankInternalOperation bankInternalOperation);
 
-    List<BankAccount> listAll();
+    List<BankInternalOperation> listAll();
 
-    Optional<BankAccount> findById(Long id);
-
-    BankAccount update(BankAccount bankAccount);
+    Optional<BankInternalOperation> findById(Long id);
 
     void deleteById(Long id);
 }

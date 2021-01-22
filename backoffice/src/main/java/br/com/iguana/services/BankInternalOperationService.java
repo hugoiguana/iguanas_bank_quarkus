@@ -1,8 +1,7 @@
 package br.com.iguana.services;
 
-import br.com.iguana.entities.BankAccountType;
-import br.com.iguana.exceptions.BussinesNotFoundEntityException;
-import br.com.iguana.repositories.IBankAccountTypeRepository;
+import br.com.iguana.entities.BankInternalOperation;
+import br.com.iguana.repositories.IBankInternalOperationRepository;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -14,50 +13,39 @@ import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
-public class BankAccountTypeService implements IBankAccountTypeService {
+public class BankInternalOperationService implements IBankInternalOperationService {
 
-    private static final Logger LOGGER = Logger.getLogger(BankAccountTypeService.class);
+    private static final Logger LOGGER = Logger.getLogger(BankInternalOperationService.class);
 
     @Inject
-    private IBankAccountTypeRepository repository;
+    private IBankInternalOperationRepository repository;
 
 
     @Override
-    public BankAccountType insert(@Valid BankAccountType bankAccountType) {
-        LOGGER.info("Persisting a Bank Account Type");
+    public BankInternalOperation insert(@Valid BankInternalOperation operation) {
+        LOGGER.info("Persisting a Bank Internal Operation");
 
-        repository.persist(bankAccountType);
-        return bankAccountType;
+        repository.persist(operation);
+        return operation;
     }
 
     @Override
     @Transactional(Transactional.TxType.SUPPORTS)
-    public List<BankAccountType> findAll() {
-        LOGGER.info("Listing all Bank Accounts Type");
+    public List<BankInternalOperation> findAll() {
+        LOGGER.info("Listing all Bank Internal Operations");
         return repository.listAll();
     }
 
     @Override
     @Transactional(Transactional.TxType.SUPPORTS)
-    public Optional<BankAccountType> findById(Long id) {
-        LOGGER.info("Listing Bank Accounts Type with id : " + id);
+    public Optional<BankInternalOperation> findById(Long id) {
+        LOGGER.info("Listing Bank Internal Operations with id : " + id);
         return repository.findById(id);
     }
 
     @Override
-    public BankAccountType update(@Valid BankAccountType bm) {
-        LOGGER.info("Updating Bank Accounts Type with id : " + bm.toString());
-
-        BankAccountType bmNew = (BankAccountType) BankAccountType.findByIdOptional(bm.id)
-                .orElseThrow(() -> new BussinesNotFoundEntityException("Bank Account Type", bm.id));
-
-        bmNew.loadToUpdate(bm);
-        return bmNew;
-    }
-
-    @Override
     public void delete(Long id) {
-        LOGGER.info("Deleting Bank Accounts Type with id : " + id);
+        LOGGER.info("Deleting Bank Internal Operation with id : " + id);
         repository.deleteById(id);
     }
 

@@ -1,27 +1,18 @@
 package br.com.iguana.controller;
 
-import javax.inject.Inject;
-import javax.validation.Valid;
-import javax.ws.rs.*;
-import javax.ws.rs.core.*;
-
 import br.com.iguana.dtos.UserSystemDto;
 import br.com.iguana.entities.UserSystem;
 import br.com.iguana.services.UserSystemService;
-import org.eclipse.microprofile.openapi.annotations.Operation;
-import org.eclipse.microprofile.openapi.annotations.media.Content;
-import org.eclipse.microprofile.openapi.annotations.media.Schema;
-import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
-import org.eclipse.microprofile.openapi.annotations.parameters.RequestBody;
-import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
-import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 import org.jboss.logging.Logger;
 
-import java.net.URI;
+import javax.inject.Inject;
+import javax.validation.Valid;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriBuilder;
+import javax.ws.rs.core.UriInfo;
 import java.util.List;
 import java.util.Optional;
-
-import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 
 public class UserSystemController implements IUserSystemController {
 
@@ -38,7 +29,7 @@ public class UserSystemController implements IUserSystemController {
     }
 
     @Override
-    public Response getById(@Parameter(description = "Bank Users identifier", required = true) @PathParam("id") Long id) {
+    public Response getById(Long id) {
         Optional<UserSystem> user = service.findById(id);
         if (user.isPresent()) {
             LOGGER.debug("Found Bank User " + user.toString());
@@ -51,9 +42,7 @@ public class UserSystemController implements IUserSystemController {
     }
 
     @Override
-    public Response create(
-            @RequestBody(required = true, content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = UserSystemDto.class))) @Valid UserSystemDto dto
-            , @Context UriInfo uriInfo) {
+    public Response create(@Valid UserSystemDto dto, @Context UriInfo uriInfo) {
 
         LOGGER.debug("Receiving request to create a new Bank User.");
 
@@ -68,7 +57,7 @@ public class UserSystemController implements IUserSystemController {
     }
 
     @Override
-    public Response update(@RequestBody(required = true, content = @Content(mediaType = APPLICATION_JSON, schema = @Schema(implementation = UserSystemDto.class))) @Valid UserSystemDto dto) {
+    public Response update(@Valid UserSystemDto dto) {
         UserSystem userSystem = dto.buildEntity();
         userSystem = service.update(userSystem);
         LOGGER.debug("Bank User updated with new valued " + userSystem.toString());
@@ -76,7 +65,7 @@ public class UserSystemController implements IUserSystemController {
     }
 
     @Override
-    public Response delete(@Parameter(description = "Bank User identifier", required = true) @PathParam("id") Long id) {
+    public Response delete(Long id) {
         service.delete(id);
         LOGGER.debug("Bank User deleted with id = " + id);
         return Response.noContent().build();
