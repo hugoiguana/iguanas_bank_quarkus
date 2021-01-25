@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 @Table(name = "tb_bank_internal_oper")
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "bio_id"))
-        , @AttributeOverride(name = "creationDate", column = @Column(name = "bio_creation_date"))
-        , @AttributeOverride(name = "alterationDate", column = @Column(name = "bio_alteration_date"))
+        , @AttributeOverride(name = "creationDate", column = @Column(name = "bio_creation_date", nullable = false))
+        , @AttributeOverride(name = "alterationDate", column = @Column(name = "bio_alteration_date", nullable = false))
 })
 public class BankInternalOperation extends AbstractEntity {
 

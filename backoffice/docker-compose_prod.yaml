@@ -3,7 +3,8 @@ services:
   backend:
     build:
       context: ./
-      dockerfile: ./src/main/docker/Dockerfile.native
+      dockerfile: ./src/main/docker/Dockerfile.jvm
+    container_name: "iguanas_bank_backoffice_prod"
     ports:
       - '8081:8081'
     env_file:
@@ -14,8 +15,12 @@ services:
       - database
   database:
     image: "postgres:12.1"
-    container_name: "iguanas_bank_backoffice"
+    container_name: "database_prod"
     ports:
       - "5432:5432"
     volumes:
       - ./db-init/prod/initialize-databases.sql:/docker-entrypoint-initdb.d/init.sql
+      - data:/var/lib/postgresql/data
+
+volumes:
+  data:

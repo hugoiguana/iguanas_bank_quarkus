@@ -6,8 +6,8 @@ import javax.persistence.*;
 @Table(name = "tb_bank_account")
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "ba_id"))
-        , @AttributeOverride(name = "creationDate", column = @Column(name = "ba_creation_date"))
-        , @AttributeOverride(name = "alterationDate", column = @Column(name = "ba_alteration_date"))
+        , @AttributeOverride(name = "creationDate", column = @Column(name = "ba_creation_date", nullable = false))
+        , @AttributeOverride(name = "alterationDate", column = @Column(name = "ba_alteration_date", nullable = false))
 })
 public class BankAccount extends AbstractEntity {
 

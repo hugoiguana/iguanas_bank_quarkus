@@ -18,8 +18,8 @@ import java.util.Set;
 @Table(name = "tb_user_system")
 @AttributeOverrides({
         @AttributeOverride(name = "id", column = @Column(name = "us_id"))
-        , @AttributeOverride(name = "creationDate", column = @Column(name = "us_creation_date"))
-        , @AttributeOverride(name = "alterationDate", column = @Column(name = "us_alteration_date"))
+        , @AttributeOverride(name = "creationDate", column = @Column(name = "us_creation_date", nullable = false))
+        , @AttributeOverride(name = "alterationDate", column = @Column(name = "us_alteration_date", nullable = false))
 })
 public class UserSystem extends AbstractEntity {
 
