@@ -1,0 +1,10 @@
+version: "3"
+services:
+  database:
+    image: "postgres:12.1"
+    container_name: "iguanas_bank_transaction_validator"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db-init/dev/initialize-databases.sql:/docker-entrypoint-initdb.d/init.sql
+      - var/lib/postgresql/data
