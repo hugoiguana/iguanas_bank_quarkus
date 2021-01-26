@@ -1,0 +1,21 @@
+version: "3"
+services:
+  backoffice_db:
+    image: "postgres:12.1"
+    container_name: "backoffice_db"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./backoffice/db-init/dev/initialize-databases.sql:/docker-entrypoint-initdb.d/init.sql
+      - var/lib/postgresql/data
+         
+  internal_transaction_db:
+    image: "postgres:12.1"
+    container_name: "internal_transaction_db"
+    ports:
+      - "5433:5432"
+    volumes:
+      - ./transation-validator/db-init/dev/initialize-databases.sql:/docker-entrypoint-initdb.d/init.sql
+      - var/lib/postgresql/data      
+      
+      

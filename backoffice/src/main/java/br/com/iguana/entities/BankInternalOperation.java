@@ -1,7 +1,10 @@
 package br.com.iguana.entities;
 
+import br.com.iguana.enums.OperationStatus;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -29,5 +32,8 @@ public class BankInternalOperation extends AbstractEntity {
 
     @Column(name = "bio_operation_type", nullable = false)
     public Integer operationType;
+
+    @Column(name = "bio_operation_status", nullable = false)
+    public Integer operationStatus;
 
 }

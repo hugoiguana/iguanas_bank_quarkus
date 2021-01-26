@@ -45,6 +45,10 @@ public class BankInternalOperationDto {
     @JsonbProperty("operation_type")
     private Integer operationType;
 
+    @Schema(example = "Open=1,Done=2,Blocked=3,Canceled=4")
+    @JsonbProperty("operation_status")
+    public Integer operationStatus;
+
     public static List<BankInternalOperationDto> build(List<BankInternalOperation> operations) {
         if (Objects.isNull(operations)) {
             return List.of();
@@ -67,6 +71,7 @@ public class BankInternalOperationDto {
         dto.setOperationMethod(operation.operationMethod);
         dto.setOperationValue(operation.operationValue);
         dto.setOperationType(operation.operationType);
+        dto.setOperationStatus(operation.operationStatus);
         return dto;
     }
 
@@ -143,5 +148,13 @@ public class BankInternalOperationDto {
 
     public void setOperationType(Integer operationType) {
         this.operationType = operationType;
+    }
+
+    public Integer getOperationStatus() {
+        return operationStatus;
+    }
+
+    public void setOperationStatus(Integer operationStatus) {
+        this.operationStatus = operationStatus;
     }
 }

@@ -1,7 +1,12 @@
 package br.com.iguana.services;
 
 import br.com.iguana.entities.BankInternalOperation;
+import br.com.iguana.enums.OperationStatus;
 import br.com.iguana.repositories.IBankInternalOperationRepository;
+import br.com.iguana.services.external.Dtos.InternalTransactionValidatorCreateDto;
+import br.com.iguana.services.external.IInternalTransactionValidatorServiceProxy;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -20,14 +25,9 @@ public class BankInternalOperationService implements IBankInternalOperationServi
     @Inject
     private IBankInternalOperationRepository repository;
 
+    @RestClient
+    private IInternalTransactionValidatorServiceProxy intTransValidatorServiceProxy;
 
-    @Override
-    public BankInternalOperation insert(@Valid BankInternalOperation operation) {
-        LOGGER.info("Persisting a Bank Internal Operation");
-
-        repository.persist(operation);
-        return operation;
-    }
 
     @Override
     @Transactional(Transactional.TxType.SUPPORTS)
@@ -44,9 +44,28 @@ public class BankInternalOperationService implements IBankInternalOperationServi
     }
 
     @Override
+    @Fallback(fallbackMethod = "blockOperation")
+    public BankInternalOperation insert(@Valid BankInternalOperation operation) {
+        LOGGER.info("Persisting a Bank Internal Operation");
+
+        operation.operationStatus = OperationStatus.DONE.getCode();
+        repository.persist(operation);
+
+        InternalTransactionValidatorCreateDto transactionValidCreateDto = new InternalTransactionValidatorCreateDto();
+        transactionValidCreateDto.setOperationId(operation.id);
+        intTransValidatorServiceProxy.create(transactionValidCreateDto);
+
+        return operation;
+    }
+
+    @Override
     public void delete(Long id) {
         LOGGER.info("Deleting Bank Internal Operation with id : " + id);
         repository.deleteById(id);
     }
 
+    private BankInternalOperation blockOperation(BankInternalOperation operation) {
+        operation.operationStatus = OperationStatus.BLOCKED.getCode();
+        return operation;
+    }
 }
