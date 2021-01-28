@@ -6,6 +6,7 @@ import br.com.iguana.repositories.IBankInternalOperationRepository;
 import br.com.iguana.services.external.Dtos.InternalTransactionValidatorCreateDto;
 import br.com.iguana.services.external.IInternalTransactionValidatorServiceProxy;
 import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Timeout;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.jboss.logging.Logger;
 
@@ -44,6 +45,7 @@ public class BankInternalOperationService implements IBankInternalOperationServi
     }
 
     @Override
+    @Timeout(1000)
     @Fallback(fallbackMethod = "blockOperation")
     public BankInternalOperation insert(@Valid BankInternalOperation operation) {
         LOGGER.info("Persisting a Bank Internal Operation");

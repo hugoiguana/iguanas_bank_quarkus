@@ -3,5 +3,5 @@ CREATE ROLE iguanasbanktransactionvalidator WITH LOGIN PASSWORD 'iguanasbanktran
 
 CREATE DATABASE iguanas_bank_transaction_validator;
 
-GRANT ALL PRIVILEGES ON DATABASE iguanas_bank_backoffice TO iguanasbank ;
-GRANT ALL PRIVILEGES ON DATABASE iguanas_bank_backoffice TO iguanasbanktransactionvalidator;
+GRANT ALL PRIVILEGES ON DATABASE iguanas_bank_transaction_validator TO iguanasbank ;
+GRANT ALL PRIVILEGES ON DATABASE iguanas_bank_transaction_validator TO iguanasbanktransactionvalidator;
