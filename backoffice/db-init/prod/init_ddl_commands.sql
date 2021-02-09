@@ -35,7 +35,7 @@
         us_id_beneficiary int8 not null,
         us_id_owner int8 not null,
         primary key (bio_id)
-    )
+    );
 
     create table tb_profile (
        us_id int8 not null,

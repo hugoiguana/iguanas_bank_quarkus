@@ -6,4 +6,4 @@
         tv_key varchar(255) not null,
         tv_operation_id int8 not null,
         primary key (tv_id)
-    )
+    );

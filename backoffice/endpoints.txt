@@ -75,3 +75,17 @@ curl --location --request POST 'http://localhost:8081/v1/bank/backoffice/account
 }'
 
 ------------------------------------------------------------------------------
+
+# Internal Oerations
+
+curl --location --request GET 'http://localhost:8081/v1/bank/backoffice/internal/operations'
+
+curl --location --request POST 'http://localhost:8081/v1/bank/backoffice/internal/operations' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "id_owner" : "1",
+    "id_beneficiary" : "1",
+    "operation_method" : "4",
+    "operation_value" : "100",
+    "operation_type" : "1"
+}'
